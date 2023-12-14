@@ -67,3 +67,39 @@ export async function listReservations(params, signal) {
     .then(formatReservationDate)
     .then(formatReservationTime);
 }
+
+
+/**
+ * Creates a new reservation
+ * @returns {Promise<[reservation]>}
+ *  a promise that resolves to the newly created reservation.
+ */
+export async function createReservation(reservation, signal) {
+  const url = `${API_BASE_URL}/reservations`;
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ data: reservation }),
+    signal,
+  };
+  return await fetchJson(url, options, reservation);
+}
+
+
+export async function fetchReservationsByDate(date, signal) {
+  const url = `http://localhost:5001/reservations?date=${date}`;
+  const options = {
+    method: "GET",
+    headers,
+    signal,
+  };
+
+  const response = await fetchJson(url, options);
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Something went wrong");
+  }
+
+  return response.json();
+}

@@ -1,20 +1,20 @@
-// reservations.service.js
-
 const knex = require("../db/connection");
 
 async function listDate(date) {
-  try {
-    const data = await knex("reservations")
-      .select("*")
-      .whereRaw('DATE(reservation_date) = ?', date)
-      .orderBy("reservation_time");
-    return data;
-  } catch (error) {
-    console.error("Error in reservations service:", error);
-    throw error;
-  }
+ return knex("reservations")
+ .select("*")
+.where({ reservation_date: date })
+.orderBy("reservations.reservation_time");
 }
 
+async function list() {
+  try {
+    return await knex("reservations").select("*");
+  } catch (error) {
+    console.error("Error in reservations service:", error);
+    throw error; 
+  }
+}
 
 
 async function create(reservation) {
@@ -25,6 +25,7 @@ async function create(reservation) {
 }
 
 module.exports = {
+  list,
   listDate,
   create,
 };
