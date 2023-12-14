@@ -50,11 +50,12 @@ function NewReservation() {
   
     const isInvalidReservation = () => {
         const today = new Date();
-        const selectedDate = new Date(reservation_date);
+        const selectedDate = new Date(`${reservation_date}  ${reservation_time}`);
         const errorMessages = [];
+
+        console.log(selectedDate.getDay());
       
         if (selectedDate.getDay() === 2) {
-            console.log("Tuesday condition met");
 
           errorMessages.push("The restaurant is closed on Tuesdays.");
         }
@@ -72,7 +73,6 @@ function NewReservation() {
         }
       };
       
-  
     return (
       <div>
         {errorMessage && (

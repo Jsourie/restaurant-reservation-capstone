@@ -3,7 +3,7 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 
 
 
-async function list(req, res) {
+async function listDate(req, res) {
   try {
     const date = req.query.date;
     const data = await service.list(date);
@@ -25,9 +25,20 @@ async function create(req, res) {
   }
 }
 
+
+async function list(req, res) {
+  try {
+    const data = await service.list();
+    res.json({ data });
+  } catch (error) {
+    console.error("Error in reservations controller:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+}
+
 module.exports = {
   create: asyncErrorBoundary(create),
+  list: asyncErrorBoundary(listDate),
   list: asyncErrorBoundary(list),
- 
 };
 
