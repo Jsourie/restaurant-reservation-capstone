@@ -1,4 +1,3 @@
-// ReservationForm.jsx
 import React from "react";
 import NewReservation from "./NewReservation";
 
@@ -92,10 +91,10 @@ function NewReservationForm({ formData, handleInputChange, handleSubmit, goBack 
     required
   />
 </div>
-            <button onClick={goBack} className="btn btn-danger mr-2">
-              Go Back
-            </button>
-            <button className="btn btn-primary" type="submit">
+    <button onClick={goBack} className="btn btn-danger mr-2">
+              Cancel
+     </button>
+        <button className="btn btn-primary" type="submit">
               Submit
             </button>
           </form>

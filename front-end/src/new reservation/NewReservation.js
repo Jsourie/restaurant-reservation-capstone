@@ -54,7 +54,6 @@ function NewReservation() {
       return;
     }
 
-    // If no validation errors, proceed with reservation creation
     createReservation(formData)
       .then(() => {
         setFormData({ ...initialFormState });
