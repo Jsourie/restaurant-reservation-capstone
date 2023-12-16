@@ -9,7 +9,7 @@ async function listDate(date) {
 
 async function list() {
   try {
-    return await knex("reservations").select("*");
+    return await knex("reservations").select("*")
   } catch (error) {
     console.error("Error in reservations service:", error);
     throw error; 

@@ -86,6 +86,28 @@ export async function createReservation(reservation, signal) {
 }
 
 
+
+
+
+
+/**
+ * Creates a new reservation
+ * @returns {Promise<[table]>}
+ *  a promise that resolves to the newly created reservation.
+ */
+export async function createTable(table, signal) {
+  const url = `${API_BASE_URL}/tables`;
+  const options = {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ data: table }),
+    signal,
+  };
+  return await fetchJson(url, options, table);
+}
+
+
+
 export async function fetchReservationsByDate(date, signal) {
   const url = `http://localhost:5001/reservations?date=${date}`;
   const options = {

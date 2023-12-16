@@ -27,10 +27,21 @@ function Dashboard({ date }) {
     <main>
       <h1>Dashboard</h1>
       <div className="d-md-flex mb-3">
-        <h4 className="mb-0">Reservations for date</h4>
+        <h4 className="mb-0">Reservations for {date}</h4>
       </div>
       <ErrorAlert error={reservationsError} />
-      {JSON.stringify(reservations)}
+
+      {/* Display reservations as individual cards */}
+      <div className="card-container">
+        {reservations.map((reservation) => (
+          <div key={reservation.reservation_id} className="card">
+            <h5 className="card-title">{reservation.last_name}, {reservation.first_name}</h5>
+            <p className="card-text">Date: {reservation.reservation_date}</p>
+            <p className="card-text">Time: {reservation.reservation_time}</p>
+            {/* Add more details as needed */}
+          </div>
+        ))}
+      </div>
     </main>
   );
 }

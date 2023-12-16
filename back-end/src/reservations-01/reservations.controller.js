@@ -17,6 +17,17 @@ async function listDate(req, res) {
 
 async function create(req, res) {
   try {
+    const reservationDate = new Date(req.body.data.date);
+    const today = new Date();
+
+    if (reservationDate.getDay() === 2) { // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+      return res.status(400).json({ error: "Reservations are not allowed on Tuesdays as the restaurant is closed." });
+    }
+
+    if (reservationDate < today) {
+      return res.status(400).json({ error: "Past reservations are not allowed. Please choose a future date." });
+    }
+
     const data = await service.create(req.body.data);
     res.status(201).json({ data });
   } catch (error) {
@@ -24,6 +35,7 @@ async function create(req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
 
 
 async function list(req, res) {
