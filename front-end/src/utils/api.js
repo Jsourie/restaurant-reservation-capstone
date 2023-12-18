@@ -70,6 +70,21 @@ export async function listReservations(params, signal) {
 
 
 /**
+ * Retrieves all existing reservation.
+ * @returns {Promise<[reservation]>}
+ *  a promise that resolves to a possibly empty array of reservation saved in the database.
+ */
+
+export async function listTables(params, signal) {
+  const url = new URL(`${API_BASE_URL}/tables`);
+  Object.entries(params).forEach(([key, value]) =>
+    url.searchParams.append(key, value.toString())
+  );
+  return await fetchJson(url, { headers, signal }, [])
+}
+
+
+/**
  * Creates a new reservation
  * @returns {Promise<[reservation]>}
  *  a promise that resolves to the newly created reservation.

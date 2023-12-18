@@ -50,10 +50,15 @@ function NewReservation() {
     }
 
     if (errorMessages.length > 0) {
-      setErrorMessage(errorMessages.join(" "));
+      // Display multiple error messages in a single alert
+      const combinedErrorMessage = errorMessages.join(" ");
+      console.log("Error messages:", combinedErrorMessage);
+
+      setErrorMessage([combinedErrorMessage]);
       return;
     }
 
+    // If no errors, proceed with reservation creation
     createReservation(formData)
       .then(() => {
         setFormData({ ...initialFormState });
@@ -64,6 +69,9 @@ function NewReservation() {
       .catch((error) => {
         console.error("Error creating reservation:", error);
       });
+
+    // Clear error messages if there are no errors
+    setErrorMessage(null);
   };
 
   const goBack = () => {
@@ -72,11 +80,11 @@ function NewReservation() {
 
   return (
     <div>
-      {errorMessage && (
-        <div className="alert alert-danger" role="alert">
-          {errorMessage}
+      {errorMessage && errorMessage.map((error, index) => (
+        <div key={index} className="alert alert-danger">
+          {error}
         </div>
-      )}
+      ))}
       <NewReservationForm
         formData={formData}
         handleInputChange={handleInputChange}
