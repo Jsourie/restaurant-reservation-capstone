@@ -19,8 +19,24 @@ async function create(table) {
     .then((createdRecords) => createdRecords[0]);
 }
 
+function updateTable(tableId, reservationId) {
+    return knex("tables")
+      .where({ table_id: tableId })
+      .update({ reservation_id: reservationId }, "*")
+      .then((tables) => tables[0]);
+  }
+
+  function deleteSeat(tableId) {
+    return knex("tables")
+      .where({ table_id: tableId })
+      .update({ reservation_id: null}, "*")
+      .then((seats) => seats[0]);
+  }
+
 module.exports = {
   list,
   create,
+  updateTable,
+  deleteSeat
 };
 

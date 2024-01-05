@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { createTable } from "../utils/api";
 
+
 function NewTable() {
     const history = useHistory();
   
@@ -37,6 +38,10 @@ function NewTable() {
         });
     };
 
+    const handleCancel = () => {
+        history.goBack();
+      };
+
 return (
     <div className="container">
   <div className="row justify-content-center">
@@ -51,6 +56,7 @@ return (
             name="table_name"
             onChange={handleInputChange}
             value={table_name}
+            minLength={2}
             className="form-control"
             required
           />
@@ -69,7 +75,7 @@ return (
           />
             </div>
         <div className="text-center">
-          <Link to="/" className="btn btn-danger mr-2">Cancel</Link>
+          <button onClick={handleCancel} className="btn btn-danger mr-2">Cancel</button>
           <button className="btn btn-primary" type="submit">Submit</button>
         </div>
       </form>

@@ -69,9 +69,20 @@ export async function listReservations(params, signal) {
 }
 
 
+export async function searchReservations(params, signal) {
+  const url = new URL(`${API_BASE_URL}/reservations`);
+  Object.entries(params).forEach(([key, value]) =>
+    url.searchParams.append(key, value.toString())
+  );
+  return await fetchJson(url, { headers, signal }, [])
+    .then(formatReservationDate)
+    .then(formatReservationTime);
+}
+
+
 /**
- * Retrieves all existing reservation.
- * @returns {Promise<[reservation]>}
+ * Retrieves all existing tables.
+ * @returns {Promise<[tables]>}
  *  a promise that resolves to a possibly empty array of reservation saved in the database.
  */
 
@@ -84,6 +95,20 @@ export async function listTables(params, signal) {
 }
 
 
+export const assignTableToReservation = async (table_id, reservation_id) => {
+  const response = await fetch(`${API_BASE_URL}/tables/${table_id}/seat`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ data: { reservation_id } }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message);
+  }
+};
 /**
  * Creates a new reservation
  * @returns {Promise<[reservation]>}
@@ -140,3 +165,24 @@ export async function fetchReservationsByDate(date, signal) {
 
   return response.json();
 }
+
+
+
+export async function deleteSeat(table_id, signal) {
+  const url = `${API_BASE_URL}/tables/${table_id}/seat`;
+  const options = { method: "DELETE", signal };
+  return await fetchJson(url, options);
+}
+
+
+export async function updateReservation(reservation_id, newStatus, signal) {
+  const url = `${API_BASE_URL}/reservation/${reservation_id}/status`;
+  const options = { method: "PUT", signal };
+  return await fetchJson(url, options);
+}
+
+
+export async function readReservation(reservation_id, signal) {
+  const url = `${API_BASE_URL}/reservation/${reservation_id}/status`;
+  const options = { method: "GET", signal };
+  return await fetchJson(url, options);}

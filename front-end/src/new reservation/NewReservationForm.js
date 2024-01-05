@@ -1,5 +1,4 @@
 import React from "react";
-import NewReservation from "./NewReservation";
 
 function NewReservationForm({ formData, handleInputChange, handleSubmit, goBack }) {
  
